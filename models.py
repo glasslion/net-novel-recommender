@@ -12,7 +12,7 @@ class BaseModel(Model):
 
 
 class Book(BaseModel):
-    url = CharField()
+    url = CharField(index=True)
     name = CharField()
     author = CharField()
     category = CharField()
@@ -22,6 +22,17 @@ class Book(BaseModel):
     update_date = CharField()
 
 
+
+class Rating(BaseModel):
+    comment_id = CharField(index=True)
+    username = CharField()
+    user_id = IntegerField(index=True)
+    book_id = IntegerField(index=True)
+    rate = IntegerField()
+    message = TextField()
+    starnum = IntegerField()
+
+
 if __name__ == '__main__':
     db.connect()
-    db.create_tables([Book], safe=True)
+    db.create_tables([Book, Rating], safe=True)
