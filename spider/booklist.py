@@ -11,6 +11,7 @@ import urllib.parse
 
 START_URL = 'http://www.yousuu.com/booklist?s=digest'
 MAX_BOOKLIST_PAGES = 100
+UA = 'Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)'
 
 
 def dump_page(resp):
@@ -37,7 +38,7 @@ def replace_querystring(url, qs):
 
 class Handler(BaseHandler):
     crawl_config = dict(
-        user_agent='Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)',
+        user_agent=UA,
     )
 
     def on_start(self):
@@ -57,8 +58,6 @@ class Handler(BaseHandler):
             self.crawl(
                 next_url, callback=self.index_page,
                 save={'depth': response.save['depth'] + 1})
-
-
 
     @config(priority=3)
     def booklist_page(self, response):

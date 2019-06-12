@@ -11,7 +11,8 @@ from pyquery import PyQuery
 from models import Book, Rating
 
 
-MAX_BOOKLIST_PAGES = 100
+MAX_BOOK_NUM = 10000000
+UA = 'Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)'
 
 
 def dump_page(resp):
@@ -38,13 +39,12 @@ def replace_querystring(url, qs):
 
 class Handler(BaseHandler):
     crawl_config = dict(
-         age=-1,
          itag='v1',
-         user_agent='Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)'
+         user_agent=UA,
     )
 
     def on_start(self):
-        books = [book for book in Book.select()][:2]
+        books = [book for book in Book.select()][:MAX_BOOK_NUM]
         for book in books:
             self.crawl(book.url, callback=self.rating_list_html, save={'depth': 1})
 
