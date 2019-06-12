@@ -37,9 +37,7 @@ def replace_querystring(url, qs):
 
 class Handler(BaseHandler):
     crawl_config = dict(
-         age=-1,
-         itag='v3'
-         user_agent='Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)'
+        user_agent='Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)',
     )
 
     def on_start(self):
