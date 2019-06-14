@@ -12,6 +12,7 @@ from models import Book, Rating
 
 
 MAX_BOOK_NUM = 10000000
+MIN_RATING_COUNT = 20
 UA = 'Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)'
 
 
@@ -44,7 +45,7 @@ class Handler(BaseHandler):
     )
 
     def on_start(self):
-        books = [book for book in Book.select()][:MAX_BOOK_NUM]
+        books = Book.select().where(Book.rating_count>MIN_RATING_COUNT).limit(MAX_BOOK_NUM)
         for book in books:
             self.crawl(book.url, callback=self.rating_list_html, save={'depth': 1})
 
@@ -66,6 +67,8 @@ class Handler(BaseHandler):
     def rating_list_ajax(self, response):
         # ajax page is almost as same as the html page
         html = response.json['comment']
+        if not html:
+            return
         d = PyQuery(html)
         response._doc = d.wrap('<div id="content"></div>')
         self.rating_list_html(response)

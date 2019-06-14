@@ -10,7 +10,7 @@ import urllib.parse
 
 
 START_URL = 'http://www.yousuu.com/booklist?s=digest'
-MAX_BOOKLIST_PAGES = 100
+MAX_BOOKLIST_PAGES = 1000
 UA = 'Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)'
 
 
